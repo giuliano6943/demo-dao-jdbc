@@ -97,36 +97,85 @@ public class SellerDaoJDBC implements SellerDao {
 
     @Override
     public List<Seller> findAll() {
-        return List.of();
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = conn.prepareStatement(
+                    "SELECT seller.*, department.Name as DepName " +
+                            "FROM seller INNER JOIN department " +
+                            "ON seller.DepartmentId = department.Id " +
+                            "ORDER BY Name");
+
+            rs = st.executeQuery();
+
+            List<Seller> list = new ArrayList<>();
+            Map<Integer, Department> map = new HashMap<>();
+
+            while (rs.next()) {
+                Department dep = map.get(rs.getInt("DepartmentId"));
+                if (dep == null) {
+                    dep = instantiateDepartment(rs);
+                    map.put(rs.getInt("DepartmentId"), dep);
+                }
+                Seller obj = instantiateSeller(rs, dep);
+                list.add(obj);
+            }
+            return list;
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            DB.closeStatement(st);
+            DB.closeResultSet(rs);
+        }
+
     }
 
     @Override
     public List<Seller> findByDepartment(Department department) {
+    //Objetivo: declarar variáveis para o comando SQL (st) e o resultado da consulta (rs).
+    //Por que: você precisa fechá-las no finally, então declara fora do try.
+
         PreparedStatement st = null;
         ResultSet rs = null;
         try {
+            //Query SQL que busca todos os vendedores ligados a um departamento específico
+            //Esse departamento é passado em DepartmentId = ?
+            // ? é substituido pelo departamento passado como parâmetro
+            //se você passar Department(2, null), ele vai buscar todos os vendedores do departamento com ID = 2.
             st = conn.prepareStatement(
                     "   SELECT seller.*,department.Name as DepName\n" +
                             "FROM seller INNER JOIN department\n" +
                             "ON seller.DepartmentId = department.Id\n" +
                             "WHERE DepartmentId = ?\n" +
                             "ORDER BY Name");
+            //Substituir o ? pelo ID do departamento recebido como parâmetro
             st.setInt(1,department.getId());
-
+            //Executa a consulta e armazena todas as linhas de vendedores desse departamento
             rs = st.executeQuery();
 
+
+
+            //Lista criada para armazenar todos os vendedores encontrados
             List<Seller> list = new ArrayList<>();
+            //Map criado para evitar criar objetos Department repetidos
+            //Ou seja, se vários vendedores pertencem ao mesmo departamento, você reaproveita o mesmo objeto Department—isso economiza memória e mantém consistência.
+            //👉 Se 10 vendedores forem do mesmo departamento, você reaproveita o mesmo objeto Department.
             Map<Integer,Department> map = new HashMap<>();
-
+            //Percorre cada linha retornada pela consulta
             while(rs.next()){
-
+                //Pega o valor da coluna DepartmentId da linha atual
+                //Usa esse valor para procurar no map se já existe um Department criado por esse ID
+                //Caso não encontre esse departmentId ele vai retornar um null para a variável dep
                 Department dep = map.get(rs.getInt("DepartmentId"));
-
+                //Verifica se já existe um Department no map
+                //Se nao existir cria um novo com instantiateDepartment(rs) e guarda no map
                 if(dep == null){
+                    //Se ainda não tiver esse department no map, crie ele, e atribua a variável dep
+                    //Esse metodo lê os dados da linha (DepartmentId e DepName) e monta o objeto Department
                     dep = instantiateDepartment(rs);
                     map.put(rs.getInt("DepartmentId"), dep);
                 }
-
+                //Cria um seller passando o departamento correto
                 Seller obj = instantiateSeller(rs, dep);
                 list.add(obj);
             }
