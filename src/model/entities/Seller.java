@@ -2,7 +2,8 @@ package model.entities;
 
 import java.io.Serializable;
 import java.util.Date;
-
+//Tabela dos vendedores
+//Guardam dados e tem getters e setters
 public class Seller implements Serializable {
 
     private Integer id;

@@ -1,7 +1,8 @@
 package model.entities;
 
 import java.io.Serializable;
-
+//Tabela dos departamentos
+//Guardam dados e tem getters e setters
 public class Department implements Serializable {
     private Integer id;
     private String name;
