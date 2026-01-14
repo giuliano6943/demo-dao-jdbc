@@ -21,7 +21,6 @@ public class Program {
         System.out.println("=== TEST 2: seller findByDepartment ===");
         Department department = new Department(2, null);
         List<Seller> list = sellerDao.findByDepartment(department);
-
         for (Seller obj : list) {
             System.out.println(obj);
         }
@@ -39,3 +38,5 @@ public class Program {
         System.out.println("Inserted! New id = " +  newSeller.getId());
     }
 }
+
+

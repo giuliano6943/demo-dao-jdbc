@@ -24,25 +24,30 @@ public class SellerDaoJDBC implements SellerDao {
 
     @Override
     public void insert(Seller obj) {
+
         PreparedStatement st = null;
         try {
+            //Query que deve ser executada no banco de dados
             st = conn.prepareStatement("INSERT INTO seller\n" +
                     "(Name, Email, BirthDate, BaseSalary, DepartmentId)\n" +
                     "VALUES\n" +
                     "(?, ?, ?, ?, ?)",
+                    //Diz ao JDBC que queremos recuperar a chave primária gerada automáticamento pelo banco
                     Statement.RETURN_GENERATED_KEYS);
-
+            //Adicionando aos placeholders as devidas variáveis
             st.setString(1,obj.getName());
             st.setString(2,obj.getEmail());
             st.setDate(3,new java.sql.Date(obj.getBirthDate().getTime()));
             st.setDouble(4,obj.getBaseSalary());
             st.setInt(5,obj.getDepartment().getId());
-
+            //Mostrando quantas linhas foram inseridas na tabela e executando o update
             int rowsAffected = st.executeUpdate();
-
+            //Rescuperar o ID gerado
             if (rowsAffected > 0) {
+                //Se uma linha foi inserida, colete as chaves geradas e atribua a variavel rs
                 ResultSet rs = st.getGeneratedKeys();
                 if(rs.next()){
+                    //Adicione o id que foi gerado pelo banco ao obj Seller, para ter o mesmo ID
                     int id = rs.getInt(1);
                     obj.setId(id);
                 }
