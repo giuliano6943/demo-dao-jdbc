@@ -28,10 +28,10 @@ public class SellerDaoJDBC implements SellerDao {
         PreparedStatement st = null;
         try {
             //Query que deve ser executada no banco de dados
-            st = conn.prepareStatement("INSERT INTO seller\n" +
-                    "(Name, Email, BirthDate, BaseSalary, DepartmentId)\n" +
-                    "VALUES\n" +
-                    "(?, ?, ?, ?, ?)",
+                st = conn.prepareStatement("INSERT INTO seller\n" +
+                        "(Name, Email, BirthDate, BaseSalary, DepartmentId)\n" +
+                        "VALUES\n" +
+                        "(?, ?, ?, ?, ?)",
                     //Diz ao JDBC que queremos recuperar a chave primária gerada automáticamento pelo banco
                     Statement.RETURN_GENERATED_KEYS);
             //Adicionando aos placeholders as devidas variáveis
@@ -71,7 +71,7 @@ public class SellerDaoJDBC implements SellerDao {
             PreparedStatement st = null;
             try {
                 st = conn.prepareStatement(
-                        "UPDATE seller " +
+                            "UPDATE seller " +
                                 "SET Name = ?, Email = ?, BirthDate = ?, BaseSalary = ?, DepartmentId = ? " +
                                 "WHERE Id = ?"
                 );
@@ -88,17 +88,15 @@ public class SellerDaoJDBC implements SellerDao {
             } finally {
                 DB.closeStatement(st);
             }
-
-
-
     }
 
     @Override
     public void deleteById(Integer id) {
         PreparedStatement st = null;
         try{
-            st = conn.prepareStatement("DELETE FROM seller\n" +
-                    "WHERE Id = ?");
+            st = conn.prepareStatement(
+                    "DELETE FROM seller\n" +
+                        "WHERE Id = ?");
 
             st.setInt(1, id);
 
@@ -174,7 +172,7 @@ public class SellerDaoJDBC implements SellerDao {
             //Fazer a consulta no banco de dados trazendo todos os vendedores e os departamentos
             //Ordenados pelo nome.
             st = conn.prepareStatement(
-                    "SELECT seller.*, department.Name as DepName " +
+                        "SELECT seller.*, department.Name as DepName " +
                             "FROM seller INNER JOIN department " +
                             "ON seller.DepartmentId = department.Id " +
                             "ORDER BY Name");
