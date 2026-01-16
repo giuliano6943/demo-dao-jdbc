@@ -1,104 +1,103 @@
-Demo DAO JDBC
-Projeto desenvolvido como parte do curso Java Completo: Programação Orientada a Objetos + Projetos do professor Nélio Alves (Udemy).
-Este módulo aborda acesso a banco de dados com JDBC, aplicando conceitos de DAO (Data Access Object), Factory, e boas práticas de programação orientada a objetos.
+# 🎯 Demo DAO JDBC
 
-📌 Objetivo do Projeto
-Demonstrar como realizar operações básicas de persistência em banco de dados utilizando JDBC.
+Projeto desenvolvido como parte do curso **Java Completo: Programação Orientada a Objetos + Projetos** do professor **Nélio Alves (Udemy)**.
 
-Implementar o padrão DAO para separar a lógica de acesso a dados da lógica de negócio.
+Este módulo aborda **acesso a banco de dados com JDBC**, aplicando conceitos de **DAO (Data Access Object)**, **Factory**, e boas práticas de programação orientada a objetos.
 
-Exercitar conceitos de interfaces, abstração e encapsulamento em Java.
+---
 
-Criar um projeto didático que simula operações de CRUD em entidades como Seller e Department.
+## 🔷 Objetivo do Projeto
 
-⚙️ Tecnologias Utilizadas
-Java 17+
+- Demonstrar como realizar operações básicas de persistência em banco de dados utilizando JDBC.
+- Implementar o padrão DAO para separar a lógica de acesso a dados da lógica de negócio.
+- Exercitar conceitos de interfaces, abstração e encapsulamento em Java.
+- Criar um projeto didático que simula operações de CRUD em entidades como `Seller` e `Department`.
 
-JDBC (Java Database Connectivity)
+---
 
-MySQL (banco de dados relacional)
+## ⚙️ Tecnologias Utilizadas
 
-DAO Pattern (Data Access Object)
+- ☕ Java 17+
+- 🔌 JDBC (Java Database Connectivity)
+- 🐬 MySQL (banco de dados relacional)
+- 🧩 DAO Pattern (Data Access Object)
+- 🏭 Factory Pattern para criação dos DAOs
+- 🛠️ Maven / IntelliJ IDEA para gerenciamento do projeto
 
-Factory Pattern para criação dos DAOs
+---
 
-Maven/IDEA para gerenciamento do projeto
+## 📁 Estrutura do Projeto
 
-📂 Estrutura do Projeto
-Código
+```
 src/
  └── application/
-      └── Program.java        # Classe principal para testes
+     └── Program.java        # Classe principal para testes
  └── model/
-      ├── dao/                # Interfaces DAO
-      ├── dao/impl/           # Implementações JDBC dos DAOs
-      └── entities/           # Classes de domínio (Seller, Department)
+     └── dao/                # Interfaces DAO
+     └── dao/impl/           # Implementações JDBC dos DAOs
+     └── entities/           # Classes de domínio (Seller, Department)
  └── db/
-      └── DB.java             # Conexão e utilitários JDBC
-db.properties                 # Configuração de conexão com o banco
-🚀 Como Executar
-Clonar o repositório
+     └── DB.java             # Conexão e utilitários JDBC
+db.properties                # Configuração de conexão com o banco
+```
 
-bash
-git clone https://github.com/giuliano6943/demo-dao-jdbc.git
-Configurar o banco de dados MySQL
+---
 
-Criar um banco chamado coursejdbc.
+## 🚀 Como Executar
 
-Executar os scripts SQL para criar as tabelas seller e department.
+1. **Clonar o repositório**
+   ```bash
+   git clone https://github.com/giuliano6943/demo-dao-jdbc.git
+   ```
 
-Ajustar o arquivo db.properties com suas credenciais:
+2. **Configurar o banco de dados MySQL**
+   - Criar o banco `coursejdbc`.
+   - Executar os scripts SQL para criar as tabelas `seller` e `department`.
+   - Editar o arquivo `db.properties` com suas credenciais:
+     ```properties
+     user=root
+     password=123456
+     dburl=jdbc:mysql://localhost:3306/coursejdbc
+     ```
 
-properties
-user=root
-password=123456
-dburl=jdbc:mysql://localhost:3306/coursejdbc
-Rodar o projeto
+3. **Executar o projeto**
+   - Rodar a classe `Program` ou `Program2` para testar os métodos DAO.
 
-Executar a classe Program ou Program2 para testar os métodos DAO (insert, update, deleteById, findById, findAll).
+---
 
-🧪 Funcionalidades Implementadas
-DepartmentDao
+## 🧪 Funcionalidades Implementadas
 
-insert(Department obj)
+### DepartmentDao
+- `insert(Department obj)`
+- `update(Department obj)`
+- `deleteById(Integer id)`
+- `findById(Integer id)`
+- `findAll()`
 
-update(Department obj)
+### SellerDao
+- CRUD completo com relacionamento ao `Department`
 
-deleteById(Integer id)
+---
 
-findById(Integer id)
+## 📚 Contexto Didático
 
-findAll()
-
-SellerDao
-
-CRUD completo com relacionamento ao Department.
-
-📖 Contexto Didático
-Este projeto faz parte do módulo de acesso a banco de dados do curso do Nélio Alves, considerado um dos mais completos de Java e OO.
+Este projeto faz parte do módulo de **acesso a banco de dados** do curso do Nélio Alves, considerado um dos mais completos de Java e OO.  
 O curso cobre:
 
-Java e OO avançado
+- Java e OO avançado  
+- UML  
+- JDBC  
+- JavaFX  
+- Spring Boot  
+- JPA / Hibernate  
+- MySQL  
+- MongoDB  
+- E muito mais!
 
-UML
+---
 
-JDBC
+## 🙌 Créditos
 
-JavaFX
-
-Spring Boot
-
-JPA / Hibernate
-
-MySQL
-
-MongoDB
-
-E muito mais!
-
-🙌 Créditos
-Curso: Java Completo - Nélio Alves (Udemy) (udemy.com in Bing)
-
-Autor do projeto: Giuliano
-
-Professor: Nélio Alves
+- 🎓 Curso: [Java COMPLETO: Programação Orientada a Objetos + Projetos](https://www.udemy.com/course/java-curso-completo/) - Nélio Alves (Udemy)
+- 👨‍💻 Autor do projeto: **Giuliano**
+- 👨‍🏫 Professor: **Nélio Alves**
